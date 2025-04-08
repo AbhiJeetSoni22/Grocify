@@ -2,10 +2,14 @@ import React from 'react';
 import Navbar from '../components/Dashboard/Navbar';
 
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Cart from '../components/Dashboard/Cart';
+
 import Home from './Home';
 import { Toaster } from 'react-hot-toast'
 import Footer from '../components/Dashboard/Footer';
+import AllProduct from './AllProduct';
+import ProductCategory from './ProductCategory';
+import ProductDetails from './ProductDetails';
+import Cart from './Cart';
 
 const UserDashboard = () => {
   const isSellerPath = useLocation().pathname.includes('seller');
@@ -17,7 +21,10 @@ const UserDashboard = () => {
         <Routes>
           {/* Use index route for MainBanner */}
           <Route index element={<Home/>} />
-          <Route path="cart" element={<Cart />} />
+          <Route path="/products" element={<AllProduct />} />
+          <Route path="/products/:category" element={<ProductCategory />} />
+          <Route path="/products/:category/:id" element={<ProductDetails />} />
+          <Route path='/cart' element={<Cart/>}/>
         </Routes>
       </div>
      {!isSellerPath && <Footer/>}

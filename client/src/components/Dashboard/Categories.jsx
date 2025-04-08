@@ -17,7 +17,7 @@ const Categories = () => {
             backgroundColor: category.bgColor
         }}
         onClick={()=>{
-           navigate(`/products/${category.path.toLowerCase()}`);
+           navigate(`/dashboard/products/${category.path.toLowerCase()}`);
            scrollTo(0,0)
         }}
         >

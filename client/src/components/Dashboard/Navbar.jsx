@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets.js";
-// import useAppContext from "../../context/AppContext"
+import {useAppContext} from "../../context/AppContext"
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  //   const {user, setUser} = useAppContext()
+ 
+    const {searchQuery , setSearchQuery , getCartCount} = useAppContext()
 
   // creating logout function
   const handleLogout = () => {
-    // setUser(null)
+  
     navigate("/login");
   };
+
+  useEffect(()=>{
+    if(searchQuery.length >0 ){
+      navigate('/dashboard/products')
+    }
+  },[searchQuery])
 
   return (
     <nav className="bg-white w-full mx-auto sticky top-0 z-50 shadow-sm border-b border-gray-100">
@@ -31,21 +37,21 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
               <NavLink
-                to="/"
-                className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 transition duration-300"
+                to="/dashboard"
+                className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-primary hover:bg-green-50 transition duration-300"
               >
                 Home
               </NavLink>
               <NavLink
-                to="/product"
-                className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 transition duration-300"
+                to="/dashboard/products"
+                className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-primary hover:bg-green-50 transition duration-300"
               >
                 All Product
               </NavLink>
 
               <NavLink
-                to="/contact"
-                className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 transition duration-300"
+                to="/dashboard/contact"
+                className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-primary hover:bg-green-50 transition duration-300"
               >
                 Contact
               </NavLink>
@@ -81,7 +87,7 @@ const Navbar = () => {
               {/* Cart Icon */}
               <div className="relative cursor-pointer" onClick={()=> navigate('/dashboard/cart')}>
                 <svg
-                  className="w-6 h-6 text-gray-700 hover:text-green-600 transition duration-300"
+                  className="w-6 h-6 text-gray-700 hover:text-primary transition duration-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -94,8 +100,8 @@ const Navbar = () => {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  3
+                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  { getCartCount()}
                 </span>
               </div>
 
@@ -142,9 +148,31 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="-mr-2 flex md:hidden">
+          <a
+              href="#"
+              className="flex items-center text-gray-700 hover:text-primary "
+            >
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              <span className="absolute top-3 right-21.5 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {getCartCount()}
+              </span>
+            </a>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-green-600 focus:outline-none transition duration-300"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none transition duration-300 "
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -193,26 +221,26 @@ const Navbar = () => {
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <NavLink
             onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition duration-300"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
             Home
           </NavLink>
           <NavLink
             onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition duration-300"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
             All Product
           </NavLink>
 
           <NavLink
             onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition duration-300"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
             Contact
           </NavLink>
           <NavLink
             onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition duration-300"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
             My Order
           </NavLink>
@@ -246,32 +274,11 @@ const Navbar = () => {
 
           {/* Mobile Cart and Profile */}
           <div className="px-3 py-2 flex items-center justify-between">
-            <a
-              href="#"
-              className="flex items-center text-gray-700 hover:text-green-600"
-            >
-              <svg
-                className="w-6 h-6 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              <span className="absolute bottom-9 left-8 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </a>
+          
 
             <a
               href="#"
-              className="flex items-center text-gray-700 hover:text-green-600"
+              className="flex items-center text-gray-700 hover:text-primary-dull"
             >
               <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
                   <img
