@@ -114,7 +114,7 @@ const Navbar = () => {
                   className="cursor-pointer"
                 />
                 <ul className="hidden group-hover:block absolute top-10 border-1 right-0 bg-white shadow-border rounded-md  border-gray-300 py-2.5 w-40 text-sm z-40 ">
-                  <li onClick={()=> navigate('/my-orders')} className="p-1.5 pl-3 hover:bg-gray-100 cursor-pointer">
+                  <li onClick={()=> navigate('/dashboard/my-orders')} className="p-1.5 pl-3 hover:bg-gray-100 cursor-pointer">
                     My Orders
                   </li>
                   <li className="p-1 pl-3 hover:bg-gray-100 cursor-pointer flex items-center space-x-2">

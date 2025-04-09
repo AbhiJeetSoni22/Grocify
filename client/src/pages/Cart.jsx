@@ -5,7 +5,7 @@ import { assets, dummyAddress } from '../assets/assets'
 const Cart = () => {
     const [showAddress, setShowAddress] = useState(false)
 
-   const { products,currency, cartItems, removeFromCart , getCartCount, updateCartItem , navigate,getCartAmount } = useAppContext()
+   const { products,currency, cartItems, removeFromCart , getCartCount, updateCartItemQuantity , navigate,getCartAmount } = useAppContext()
 
    const [cartArray, setCartArray] = useState([])
    const [addresses, setAddresses] = useState(dummyAddress)
@@ -28,14 +28,14 @@ const Cart = () => {
     },[products,cartItems])
 
     const placeOrder = async ()=>{
-
+        
     }
 
     return products.length > 0 && cartItems ? (
         <div className="flex flex-col md:flex-row mt-16">
             <div className='flex-1 max-w-4xl'>
                 <h1 className="text-3xl font-medium mb-6">
-                    Shopping Cart <span className="text-sm text-primary">{getCartCount}</span>
+                    Shopping Cart <span className="text-sm text-primary">{getCartCount()} {' '} items</span>
                 </h1>
 
                 <div className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-base font-medium pb-3">
@@ -59,7 +59,7 @@ const Cart = () => {
                                     <p>Weight : <span>{product.weight || "N/A"}</span></p>
                                     <div className='flex items-center'>
                                         <p>Qty:</p>
-                                        <select className='outline-none'>
+                                        <select onChange={ (e) => updateCartItemQuantity(product._id , Number(e.target.value))} value={cartItems[product._id]} className='outline-none'>
                                             {Array(cartItems[product._id] > 9 ? cartItems[product._id]: 9).fill('').map((_, index) => (
                                                 <option key={index} value={index + 1}>{index + 1}</option>
                                             ))}
@@ -69,7 +69,7 @@ const Cart = () => {
                             </div>
                         </div>
                         <p className="text-center">{currency}{product.offerPrice * product.quantity}</p>
-                        <button onClick={()=> {removeFromCart()}} className="cursor-pointer mx-auto">
+                        <button onClick={()=> {removeFromCart(product._id)}} className="cursor-pointer mx-auto">
                          <img src={assets.remove_icon} alt="remove" className='inline-block w-6 h-6' />
                         </button>
                     </div>)

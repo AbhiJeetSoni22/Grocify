@@ -4,6 +4,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard.jsx";
+import SellerLogin from "./components/Seller/SellerLogin.jsx";
+import SellerDashboard from "./pages/SellerDashboard.jsx";
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
       <Route path="/dashboard/*" element={<UserDashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/seller-login" element={<SellerLogin />} />
+      <Route path="/seller-dashboard/*" element={<SellerDashboard />} />
     </Routes>
   );
 }
