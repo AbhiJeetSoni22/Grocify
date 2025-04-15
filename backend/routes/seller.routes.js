@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isSellerAuth, sellerLogin, sellerLogout } from "../controllers/seller.controller.js";
-import authSeller from "../middlewares/authSeller.middleware";
+import authSeller from "../middlewares/authSeller.middleware.js";
 
 const sellerRouter = Router();
 
