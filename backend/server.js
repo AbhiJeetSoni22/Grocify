@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './configs/db.js';
 import 'dotenv/config.js';
 import userRouter from './routes/user.route.js';
+import sellerRouter from './routes/seller.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRouter);
+app.use('/api/seller', sellerRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
