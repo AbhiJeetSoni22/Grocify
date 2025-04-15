@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
+import toast from 'react-hot-toast';
 
 const SellerLogin = () => {
+  
   const navigate = useNavigate();
-  const { setUser,isSeller, setIsSeller } = useAppContext();
+  const { setUser,isSeller, setIsSeller,axios} = useAppContext();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -24,16 +26,25 @@ const SellerLogin = () => {
   },[isSeller])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Handle seller login logic here
-    setUser({
-      email: formData.email,
-      password: formData.password
-    });
-    setIsSeller(true);
-    // After successful login
-    
-    console.log('Seller Login submitted:', formData);
+    try {
+      e.preventDefault();
+      const { data } = await axios.post('/api/seller/login',{
+        email: formData.email,
+        password: formData.password
+      })
+      console.log(data)
+      if(data.success){
+        toast.success(data.message);
+        setUser(data.user);
+        setIsSeller(true);
+        localStorage.setItem('sellerToken', data.token);
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message);
+      
+    } 
   };
 
   return (

@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard.jsx";
 import SellerLogin from "./components/Seller/SellerLogin.jsx";
 import SellerDashboard from "./pages/SellerDashboard.jsx";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
 
 
   return (
+    <>
+    <Toaster/>
     <Routes>
       {/* Redirect to Landing if no token, otherwise to UserDashboard */}
       <Route
@@ -27,6 +30,7 @@ function App() {
       <Route path="/seller-login" element={<SellerLogin />} />
       <Route path="/seller-dashboard/*" element={<SellerDashboard />} />
     </Routes>
+    </>
   );
 }
 

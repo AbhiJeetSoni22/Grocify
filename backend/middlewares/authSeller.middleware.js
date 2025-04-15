@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const  authSeller = (req, res, next) => {
     const {sellerToken } = req.cookies;
     if (!sellerToken) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.json({success:false, message: 'Unauthorized' });
     }
     try {
         const decoded = jwt.verify(sellerToken, process.env.JWT_SECRET);
@@ -13,10 +13,10 @@ const  authSeller = (req, res, next) => {
             next();
         }
         else{
-            return res.status(403).json({ message: 'Not authorized' });
+            return res.json({success:false, message: 'Not authorized' });
         }
     } catch (error) {
-        return res.status(403).json({ message: error.message});
+        return res.json({success:false, message: error.message});
     }
 }
 

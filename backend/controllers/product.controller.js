@@ -13,9 +13,10 @@ export const addProduct = async (req, res) => {
             return result.secure_url;
         })
     );
+    console.log(imagesUrl)
     await Product.create({
         ...productData,
-        image:imagesUrl
+        images:imagesUrl
     });
     return res.status(200).json({ success: true, message: 'Product added successfully' });
   } catch (error) {

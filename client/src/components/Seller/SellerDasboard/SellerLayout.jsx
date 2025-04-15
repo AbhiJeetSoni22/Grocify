@@ -2,9 +2,11 @@ import React from 'react';
 import { useAppContext } from '../../../context/AppContext';
 import { assets } from '../../../assets/assets';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
 
 const SellerLayout = () => {
-  const { setIsSeller } = useAppContext();
+  const { axios,navigate } = useAppContext();
   const location = useLocation(); // Get current path
 
   const sidebarLinks = [
@@ -14,7 +16,19 @@ const SellerLayout = () => {
   ];
 
   const logout = async () => {
-    setIsSeller(false);
+    try {
+      const { data } = await axios.get('/api/seller/logout');
+      if (data.success) {
+        toast.success(data.message);
+        navigate('/landing');
+        localStorage.removeItem('sellerToken');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      
+    }
   };
 
   return (
