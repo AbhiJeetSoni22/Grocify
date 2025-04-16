@@ -36,7 +36,7 @@ export const AppContextProvider = ({ children }) => {
   const fetchSeller= async()=>{
     try {
       const {data} = await axios.get('/api/seller/is-auth')
-      console.log(data)
+      
       if(data.success){
         setIsSeller(true);
       }else{
@@ -47,6 +47,24 @@ export const AppContextProvider = ({ children }) => {
       console.log(error)
     }
   }
+
+  // FETCH USER AUTH STATUS , user Data nd Cart Items
+  const fetchUser = async () => {
+    try {
+      const { data } = await axios.get("/api/user/is-auth");
+      if (data.success) {
+       
+        setUser(data.user);
+        setCartItems(data.user?.cartItems);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.log(error);
+      setUser(null);
+    }
+  };
+
   // Add product to cart
   const addToCart = (itemId) => {
     let cartData = structuredClone(cartItems);
@@ -101,9 +119,28 @@ export const AppContextProvider = ({ children }) => {
     return Math.floor(totalAmount * 100) / 100;
   }
   useEffect(() => {
+    fetchUser();
     fetchProducts();
     fetchSeller();
   }, []);
+
+  useEffect(()=>{
+    const updateCart = async()=>{
+      try {
+        const {data}= await axios.post('/api/cart/update', {cartItems})
+        
+        if(!data.success){
+          toast.error(data.message)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if(user){
+      updateCart();
+    }
+  },[cartItems])
 
   const value = {
     navigate,

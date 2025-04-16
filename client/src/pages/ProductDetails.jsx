@@ -23,11 +23,11 @@ const ProductDetails = () => {
     },[products])
 
     useEffect(()=>{
-        setThumbnail(product?.image[0] ? product.image[0]: null)
+        setThumbnail(product?.images[0] ? product.images[0]: null)
     },[product])
 
     return product && (
-        <div className="MT-12">
+        <div className="mt-12">
             <p>
                 <Link to={"/dashboard"}>Home</Link> /
                 <Link to={"/dashboard/products"}> Products</Link> /
@@ -38,7 +38,7 @@ const ProductDetails = () => {
             <div className="flex flex-col md:flex-row gap-16 mt-4">
                 <div className="flex gap-3">
                     <div className="flex flex-col gap-3">
-                        {product.image.map((image, index) => (
+                        {product.images.map((image, index) => (
                             <div key={index} onClick={() => setThumbnail(image)} className="border max-w-24 border-gray-500/30 rounded overflow-hidden cursor-pointer" >
                                 <img src={image} alt={`Thumbnail ${index + 1}`} />
                             </div>
@@ -56,7 +56,7 @@ const ProductDetails = () => {
                     <div className="flex items-center gap-0.5 mt-1">
                         {Array(5).fill('').map((_, i) => (
                           
-                              <img src={i<4? assets.star_icon: assets.star_dull_icon} alt="" className='md:w-4 w-3.5'/>
+                              <img key={i} src={i<4? assets.star_icon: assets.star_dull_icon} alt="" className='md:w-4 w-3.5'/>
                        
                         ))}
                         <p className="text-base ml-2">(4)</p>

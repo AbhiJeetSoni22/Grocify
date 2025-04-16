@@ -9,7 +9,7 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+   
   });
 
   const handleChange = (e) => {
@@ -37,7 +37,15 @@ const Signup = () => {
         toast.error(data.message);
       }
   } catch (error) {
-      toast.error(error.message)
+      toast.error('Email already exists!');
+    setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          password: ''
+        })
+    }, 2000);
+      console.error('Signup error:', error);
   }
   };
 
@@ -47,7 +55,7 @@ const Signup = () => {
         className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-md"
         data-aos="zoom-in"
       >
-        <div className="p-8">
+        <div className="md:p-8 p-6 ">
           <div className="flex justify-center mb-8">
             <div className="flex items-center space-x-2">
              
@@ -61,9 +69,9 @@ const Signup = () => {
           </div>
 
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">Create Account</h2>
-          <p className="text-gray-600 text-center mb-8">Join Grocify for faster deliveries</p>
+          <p className="text-gray-600 text-center md:mb-8 mb-4">Join Grocify for faster deliveries</p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="md:space-y-6 space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <input
@@ -72,7 +80,7 @@ const Signup = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition duration-300"
+                className="w-full px-4 py-3  rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition duration-300"
                 placeholder="John Doe"
                 required
               />

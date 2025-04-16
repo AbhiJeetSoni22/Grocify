@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets.js";
 import {useAppContext} from "../../context/AppContext"
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
  
-    const {searchQuery , setSearchQuery , getCartCount} = useAppContext()
+    const {searchQuery ,setUser, setSearchQuery , getCartCount,axios} = useAppContext()
 
   // creating logout function
-  const handleLogout = () => {
-  
-    navigate("/login");
+  const handleLogout = async() => {
+    try {
+      const {data}= await axios.get('/api/user/logout');
+      if(data.success){
+        toast.success(data.message);
+        setUser('null')
+        navigate('/landing')
+      }
+      else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('error during logout')
+    }
   };
 
   useEffect(()=>{
@@ -148,8 +161,8 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="-mr-2 flex md:hidden">
-          <a
-              href="#"
+          <Link
+             to={"/dashboard/cart"}
               className="flex items-center text-gray-700 hover:text-primary "
             >
               <svg
@@ -169,7 +182,7 @@ const Navbar = () => {
               <span className="absolute top-3 right-21.5 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {getCartCount()}
               </span>
-            </a>
+            </Link>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none transition duration-300 "
@@ -220,12 +233,14 @@ const Navbar = () => {
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <NavLink
+          to='/dashboard'
             onClick={() => setIsMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
             Home
           </NavLink>
           <NavLink
+          to="/dashboard/products"
             onClick={() => setIsMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
@@ -233,12 +248,14 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
+           to="/dashboard/contact"
             onClick={() => setIsMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >
             Contact
           </NavLink>
           <NavLink
+            to="/dashboard/my-orders"
             onClick={() => setIsMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-green-50 transition duration-300"
           >

@@ -8,13 +8,13 @@ export const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
-            return res.status(400).json({sucess:false, message: "Please fill all the fields" });
+            return res.status(400).json({success:false, message: "Please fill all the fields" });
         }
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ sucess:false, message: "User already exists" });
+            return res.status(400).json({ success:false, message: "User already exists" });
         }
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,11 +36,11 @@ export const registerUser = async (req, res) => {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
         });
-        return res.status(201).json({ sucess:true, user: { id: user._id, name: user.name, email: user.email } });
+        return res.status(201).json({ success:true, user: { id: user._id, name: user.name, email: user.email } });
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ sucess:false, message: "Server error" });
+        return res.status(500).json({ success:false, message: "Server error" });
         
     }
 }
@@ -50,17 +50,17 @@ export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res.status(400).json({ sucess:false, message: "Please fill all the fields" });
+            return res.status(400).json({ success:false, message: "Please fill all the fields" });
         }
         // Check if user exists
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ sucess:false, message: "Invalid credentials" });
+            return res.status(400).json({ success:false, message: "Invalid credentials" });
         }
         // Check password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ sucess:false, message: "Invalid credentials" });
+            return res.status(400).json({ success:false, message: "Invalid credentials" });
         }
         // Generate JWT token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -73,11 +73,11 @@ export const loginUser = async (req, res) => {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
         });
-        return res.status(200).json({ sucess:true, user: { id: user._id, name: user.name, email: user.email } });
+        return res.status(200).json({ success:true, user: { id: user._id, name: user.name, email: user.email } ,message:"Logged In Successfully" });
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ sucess:false, message: error.message });
+        return res.status(500).json({ success:false, message: error.message });
         
     }
 }
@@ -93,7 +93,7 @@ export const isAuth = async (req, res) => {
          return res.status(200).json({success:true, user}); 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ sucess:false, message: error.message });
+        return res.status(500).json({ success:false, message: error.message });
        
     }
 }
@@ -106,10 +106,10 @@ export const logoutUser = async (req, res) => {
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         });
-        return res.status(200).json({ sucess:true, message: "Logged out successfully" });
+        return res.status(200).json({ success:true, message: "Logged out successfully" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ sucess:false, message: error.message });
+        return res.status(500).json({ success:false, message: error.message });
         
     }
 }

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { assets, dummyAddress } from '../assets/assets'
+import toast from 'react-hot-toast'
 
 const Cart = () => {
     const [showAddress, setShowAddress] = useState(false)
 
-   const { products,currency, cartItems, removeFromCart , getCartCount, updateCartItemQuantity , navigate,getCartAmount } = useAppContext()
+   const { axios,products,currency, cartItems, removeFromCart,setCartItems , getCartCount, updateCartItemQuantity , navigate,getCartAmount,user } = useAppContext()
 
    const [cartArray, setCartArray] = useState([])
-   const [addresses, setAddresses] = useState(dummyAddress)
-   const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0])
+   const [addresses, setAddresses] = useState([])
+   const [selectedAddress, setSelectedAddress] = useState(null)
     const [paymentOption, setPaymentOption] = useState("COD");
     const getCart = ()=>{
         let tempArray = [];
@@ -27,10 +28,56 @@ const Cart = () => {
        }
     },[products,cartItems])
 
-    const placeOrder = async ()=>{
+    const getUserAddresss = async ()=>{
+       try {
+         const {data} = await axios.get('/api/address/get')
+         if(data.success){
+            setAddresses(data.addresses)
+            if(data.addresses.length > 0){
+                setSelectedAddress(data.addresses[0])
+            }else{
+                setSelectedAddress(dummyAddress)
+            }
+         }else{
+            toast.error(data.message)
+         }
+       } catch (error) {
+        console.log(error)
         
+       }
     }
 
+    const placeOrder = async ()=>{
+        try {
+            if(!selectedAddress){
+                toast.error('Please select an address')
+                return
+            }
+            if(paymentOption === 'COD'){
+                const {data}= await axios.post('/api/order/cod',{
+                    userId:user._id,
+                    items:cartArray.map(item=> ({product: item._id, quantity: item.quantity})),
+                    address: selectedAddress,
+                })
+                if(data.success){
+                    toast.success(data.message)
+                    setCartItems({})
+                    setTimeout(()=>{
+                        navigate('/dashboard/my-orders')
+                    },500)
+                }else{
+                    toast.error(data.message)
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+   useEffect(()=>{
+    if(user){
+        getUserAddresss()
+    }
+   },[user])
     return products.length > 0 && cartItems ? (
         <div className="flex flex-col md:flex-row mt-16">
             <div className='flex-1 max-w-4xl'>
@@ -51,7 +98,7 @@ const Cart = () => {
                                 navigate(`/dashboard/products/${product.category.toLowerCase()}/${product._id}`);
                                 scrollTo(0, 0);
                             }} className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded">
-                                <img className="max-w-full h-full object-cover" src={product.image[0]} alt={product.name} />
+                                <img className="max-w-full h-full object-cover" src={product.images[0]} alt={product.name} />
                             </div>
                             <div>
                                 <p className="hidden md:block font-semibold">{product.name}</p>
@@ -94,7 +141,7 @@ const Cart = () => {
                     <p className="text-sm font-medium uppercase">Delivery Address</p>
                     <div className="relative flex justify-between items-start mt-2">
                         <p className="text-gray-500">{
-                        setSelectedAddress ? `${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.city}, ${selectedAddress.state}, ${selectedAddress.country}` :
+                        setSelectedAddress ? `${selectedAddress?.street}, ${selectedAddress?.city}, ${selectedAddress?.city}, ${selectedAddress?.state}, ${selectedAddress?.country}` :
                         'No address found'}</p>
                         <button onClick={() => setShowAddress(!showAddress)} className="text-primary hover:underline cursor-pointer">
                             Change
@@ -104,7 +151,7 @@ const Cart = () => {
                                { addresses.map((address, index)=>(<p key={index} onClick={() =>{ 
                                 setSelectedAddress(address);
                                 setShowAddress(false)}} className="text-gray-500 p-2 hover:bg-gray-100">
-                                    {address.name}, {address.address}, {address.city}, {address.state}, {address.country}
+                                    {address.street}, {address.city}, {address.state}, {address.country}
                                 </p>)) }
                                 <p onClick={() => navigate('/dashboard/add-address')} className="text-primary text-center cursor-pointer p-2 hover:bg-primary/10">
                                     Add address

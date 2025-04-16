@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
-import { dummyOrders } from '../assets/assets';
+
 
 const MyOrders = () => {
   const [myOrders, setMyOrders] = useState([]);
-  const {currency} = useAppContext();
+  const {currency,axios,user} = useAppContext();
   
   const fetchMyOrders = async ()=>{
-    setMyOrders(dummyOrders)
+    try {
+      const {data }=  await axios.get('/api/order/user');
+        if(data.success){
+            setMyOrders(data.orders)
+        }
+    } catch (error) {
+        console.log(error)
+        
+    }
   }
 
   useEffect(()=>{
-    fetchMyOrders()
-  },[])
+    if(user){
+        fetchMyOrders()
+    }
+    
+  },[user])
  
   return (
     <div className='pb-16 mt-16'>
@@ -36,7 +47,7 @@ const MyOrders = () => {
                             } border-gray-300 flex flex-col md:flex-row md:items-center justify-between p-4 py-5 md:gap-16 w-full max-w-4xl`}>
                                 <div className=' flex items-center mb-4 md:mb-0'>
                                     <div className='bg-primary/10 p-4 rounded-lg'>
-                                        <img src={item.product.image[0]} alt="" className='w-16 h-16'/>
+                                        <img src={item.product.images[0]} alt="" className='w-16 h-16'/>
                                     </div>
                                     <div className='ml-4 '>
                                         <h2 className='text-xl font-medium text-gray-800'>{item.product.name}</h2>

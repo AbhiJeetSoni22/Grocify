@@ -1,5 +1,3 @@
-
-
 //place order COD: /api/order/cod
 
 import Order from "../models/order.model.js";
@@ -8,29 +6,37 @@ import Product from "../models/product.model.js";
 export const placeOrderCOD = async (req, res) => {
     try {
         const { userId, items, address } = req.body;
-        if(!address || !items.length === 0 || !userId) {
+        if (!address || items.length === 0 || !userId) {
             return res.status(400).json({ success: false, message: 'Missing required fields' });
         }
-       // calculate amount using items
-       let amount = await items.reduce(async (acc, item) => {
-        const product = await Product.findById(item.product);
-        return acc + (product.offerPrice * item.quantity);
-       },0);
-       // add tax charge (2%)
-         amount += Math.floor(amount * 0.02);
-    
+
+        // Calculate amount using items
+        let amount = 0;
+        const itemAmounts = await Promise.all(
+            items.map(async (item) => {
+                const product = await Product.findById(item.product);
+                if (!product) {
+                    throw new Error(`Product with ID ${item.product} not found`);
+                }
+                return product.offerPrice * item.quantity;
+            })
+        );
+        amount = itemAmounts.reduce((acc, curr) => acc + curr, 0);
+
+        // Add tax charge (2%)
+        amount += Math.floor(amount * 0.02);
+
+        // Create the order
         await Order.create({
             userId,
             items,
             address,
             amount,
             paymentType: 'COD',
-            isPaid: false
+            isPaid: false,
         });
 
-        // Create order in the database (assuming you have an Order model)
-        
-        return res.status(200).json({ success: true, message: 'Order placed successfully'});
+        return res.status(200).json({ success: true, message: 'Order placed successfully' });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ success: false, message: error.message });

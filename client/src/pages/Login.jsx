@@ -21,10 +21,11 @@ const Login = () => {
     try {
         e.preventDefault();
         // Handle signup logic here
-        const { data }= await axios.post('/api/user/register',{
+        const { data }= await axios.post('/api/user/login',{
           email: formData.email,
           password: formData.password,
         })
+       
         if(data.success){
           setUser(data.user);
           navigate('/dashboard');
@@ -34,7 +35,8 @@ const Login = () => {
           toast.error(data.message);
         }
     } catch (error) {
-        toast.error("Invalid credentials")
+        toast.error("Invalid credentials");
+        console.error('Login error:', error);
     }
     };
 
@@ -78,7 +80,7 @@ const Login = () => {
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                <Link to="/forgot-password" className="text-sm text-primary hover:text-primary-dull transition duration-300">Forgot password?</Link>
+                
               </div>
               <input
                 type="password"

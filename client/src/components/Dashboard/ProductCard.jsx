@@ -3,32 +3,34 @@ import { assets } from '../../assets/assets';
 import { useAppContext } from '../../context/AppContext';
 
 const ProductCard = ({ product }) => {
-  const { currency, addToCart, removeFromCart, cartItems,navigate } = useAppContext();
+  const { currency, addToCart, removeFromCart, cartItems, navigate } = useAppContext();
 
   return (
     product && (
-      <div onClick={()=> {navigate(`/dashboard/products/${product.category.toLowerCase()}/${product._id}`);
-      scrollTo(0,0)
-      }} className="border border-gray-500/20 rounded-md px-3 py-2 bg-white w-full">
+      <div
+        onClick={() => {
+          navigate(`/dashboard/products/${product.category.toLowerCase()}/${product._id}`);
+          scrollTo(0, 0);
+        }}
+        className="border border-gray-500/20 rounded-md p-3 bg-white w-full hover:shadow-md transition-shadow"
+      >
         <div className="group cursor-pointer flex items-center justify-center px-2">
           <img
-            className="group-hover:scale-105 transition max-w-26 md:max-w-36"
+            className="group-hover:scale-105 transition-transform max-w-full h-auto object-contain"
             src={product.images[0]}
             alt={product.name}
           />
         </div>
-        <div className="text-gray-500/60 text-sm">
+        <div className="text-gray-500/60 text-sm mt-2">
           <p>{product.category}</p>
-          <p className="text-gray-700 font-medium text-lg truncate w-full">
-            {product.name}
-          </p>
-          <div className="flex items-center gap-0.5">
+          <p className="text-gray-700 font-medium text-lg truncate w-full">{product.name}</p>
+          <div className="flex items-center gap-0.5 mt-1">
             {Array(5)
               .fill('')
               .map((_, i) => (
                 <img
                   src={i < 4 ? assets.star_icon : assets.star_dull_icon}
-                  alt=""
+                  alt="star"
                   className="md:w-3.5 w-3"
                   key={i}
                 />
@@ -39,7 +41,8 @@ const ProductCard = ({ product }) => {
             <p className="md:text-xl text-base font-medium text-primary">
               {currency} {product.offerPrice}{' '}
               <span className="text-gray-500/60 md:text-sm text-xs line-through">
-                {currency}{product.price}
+                {currency}
+                {product.price}
               </span>
             </p>
             <div
