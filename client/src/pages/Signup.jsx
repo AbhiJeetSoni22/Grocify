@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
-  const { setUser } = useAppContext()
-  const [formData, setFormData] = useState({
+  const { setUser,axios } = useAppContext()
+  const [formData, setFormData, navigate] = useState({
     name: '',
     email: '',
     password: '',
@@ -18,16 +19,26 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle signup logic here
-    setUser({
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      
-    })
-    console.log('Signup submitted:', formData);
+  const handleSubmit = async (e) => {
+  try {
+      e.preventDefault();
+      // Handle signup logic here
+      const { data }= await axios.post('/api/user/register',{
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      })
+      if(data.success){
+        setUser(data.user);
+        navigate('/dashboard');
+        toast.success('Account created successfully!');
+      }
+      else{
+        toast.error(data.message);
+      }
+  } catch (error) {
+      toast.error(error.message)
+  }
   };
 
   return (
@@ -95,19 +106,7 @@ const Signup = () => {
               />
             </div>
 
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition duration-300"
-                placeholder="••••••••"
-                required
-              />
-            </div>
+          
 
             <div className="flex items-center">
               <input

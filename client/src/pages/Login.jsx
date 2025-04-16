@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
 
 const Login = () => {
-  const navigate = useNavigate()
-  const { setUser } = useAppContext();
+  const { setUser,navigate, axios } = useAppContext();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -17,17 +17,26 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    setUser({
-      email: formData.email,
-      password : formData.password
-    })
-    //after successfully login 
-    navigate('/dashboard')
-    console.log('Login submitted:', formData);
-  };
+  const handleSubmit = async (e) => {
+    try {
+        e.preventDefault();
+        // Handle signup logic here
+        const { data }= await axios.post('/api/user/register',{
+          email: formData.email,
+          password: formData.password,
+        })
+        if(data.success){
+          setUser(data.user);
+          navigate('/dashboard');
+          toast.success('Logged In successfully!');
+        }
+        else{
+          toast.error(data.message);
+        }
+    } catch (error) {
+        toast.error("Invalid credentials")
+    }
+    };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center p-4">

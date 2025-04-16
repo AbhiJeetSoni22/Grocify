@@ -55,7 +55,7 @@ export const changeStock = async (req, res) => {
   try {
     const { id, inStock } = req.body;
     await Product.findByIdAndUpdate(id, { inStock });
-    return res.status(200).json({ success: true, message: 'Product stock updated successfully' });
+    return res.status(200).json({ success: true, message: 'Stock updated successfully' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
