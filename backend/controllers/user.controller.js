@@ -65,6 +65,7 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "3d",
         });
+        
         // Set cookie with JWT token
         res.cookie("token", token, {
             httpOnly: true,
@@ -72,7 +73,7 @@ export const loginUser = async (req, res) => {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
         });
-        return res.status(200).json({ success:true, user: { id: user._id, name: user.name, email: user.email } ,message:"Logged In Successfully" });
+        return res.status(200).json({ success:true,token, user: { id: user._id, name: user.name, email: user.email } ,message:"Logged In Successfully" });
 
     } catch (error) {
         console.error(error);

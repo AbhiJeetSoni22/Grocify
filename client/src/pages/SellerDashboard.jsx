@@ -8,8 +8,8 @@ import { Toaster } from 'react-hot-toast';
 
 const SellerDashboard = () => {
   const navigate= useNavigate();
- const token = localStorage.getItem('sellerToken');
- useEffect(()=>{
+  useEffect(()=>{
+   const token = localStorage.getItem('sellerToken') || document.cookie.includes('sellerToken');
   if(!token){
     navigate('/seller-login')
   }

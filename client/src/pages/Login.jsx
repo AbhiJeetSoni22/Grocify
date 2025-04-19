@@ -28,6 +28,7 @@ const Login = () => {
        
         if(data.success){
           setUser(data.user);
+          localStorage.setItem('token',data.token)
           navigate('/dashboard');
           toast.success('Logged In successfully!');
         }

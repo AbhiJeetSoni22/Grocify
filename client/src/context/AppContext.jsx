@@ -29,7 +29,7 @@ export const AppContextProvider = ({ children }) => {
       }
      } catch (error) {
       console.log(error);
-      toast.error(error.message); 
+      
      }
   };
   //fetch seller status

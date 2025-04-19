@@ -10,18 +10,21 @@ import Cart from './Cart';
 import AddAddress from './AddAddress';
 import MyOrders from './MyOrders';
 import { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const isSellerPath = useLocation().pathname.includes('seller');
-
   useEffect(() => {
     // Check for token in localStorage or cookies
-    const token = localStorage.getItem('token') || document.cookie.includes('token');
+    const token = localStorage.getItem('token') ||Cookies.get('token');
+    console.log('cookies',Cookies.get('token'))
+    
+    console.log(token)
     if (!token) {
       navigate('/landing'); // Redirect to the landing page if no token is found
     }
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="w-full">
