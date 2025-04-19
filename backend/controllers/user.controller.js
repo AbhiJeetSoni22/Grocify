@@ -1,4 +1,3 @@
-
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -85,18 +84,17 @@ export const loginUser = async (req, res) => {
 // checkAuth: /api/user/is-auth
 export const isAuth = async (req, res) => {
     try {
-       const {userId} = req.body;
-       const user = await User.findById(userId).select("-password");
-       if(!user){
-            return res.status(404).json({success:false, message:"User not found"});
-       }
-         return res.status(200).json({success:true, user}); 
+        const { userId } = req.body;
+        const user = await User.findById(userId).select("-password");
+        if (!user) {
+            return res.status(200).json({ success: false, message: "User not found" }); // Return success: false
+        }
+        return res.status(200).json({ success: true, user });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ success:false, message: error.message });
-       
+        return res.status(500).json({ success: false, message: error.message });
     }
-}
+};
 
 // Logout User: /api/user/logout
 export const logoutUser = async (req, res) => {

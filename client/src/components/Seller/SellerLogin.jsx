@@ -105,12 +105,14 @@ const SellerLogin = () => {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Not a seller yet?{' '}
-              <Link to="/seller/signup" className="text-primary font-medium hover:text-primary-dull transition duration-300">
-                Sign up
-              </Link>
+          {/* Display seller credentials */}
+          <div className="mt-6 bg-gray-100 p-4 rounded-lg">
+            <h3 className="text-lg font-medium text-gray-700 mb-2">Demo Credentials</h3>
+            <p className="text-sm text-gray-600">
+              <strong>Email:</strong> admin@example.com
+            </p>
+            <p className="text-sm text-gray-600">
+              <strong>Password:</strong> admine123
             </p>
           </div>
         </div>

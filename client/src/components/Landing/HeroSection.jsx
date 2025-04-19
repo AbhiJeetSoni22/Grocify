@@ -27,9 +27,10 @@ const HeroSection = () => {
               Order Now
             </button>
             <button 
+              onClick={() => navigate('/seller-login')}
               className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-full hover:bg-green-50 transition-all duration-300 font-medium transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
             >
-              How It Works
+              Seller Login
             </button>
           </div>
           <div className="mt-10 flex justify-center lg:justify-start space-x-4">

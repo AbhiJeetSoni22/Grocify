@@ -52,6 +52,7 @@ export const AppContextProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       const { data } = await axios.get("/api/user/is-auth");
+      console.log(data.success)
       if (data.success) {
        
         setUser(data.user);
@@ -60,7 +61,7 @@ export const AppContextProvider = ({ children }) => {
         setUser(null);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
       setUser(null);
     }
   };

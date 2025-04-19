@@ -10,7 +10,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 to-white">
       {/* Header */}
-     <Header/>
+     {/* <Header/> */}
 
       {/* Hero Section */}
      <HeroSection/>
