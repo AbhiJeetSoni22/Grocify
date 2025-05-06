@@ -17,8 +17,8 @@ const UserDashboard = () => {
   const isSellerPath = useLocation().pathname.includes('seller');
   useEffect(() => {
     // Check for token in localStorage or cookies
-    const token = localStorage.getItem('token') ||Cookies.get('token');
-    console.log('cookies',Cookies.get('token'))
+    const token = localStorage.getItem('token') || Cookies.get('token');
+    console.log('cookies',token)
     
     console.log(token)
     if (!token) {

@@ -18,6 +18,7 @@ const Navbar = () => {
         toast.success(data.message);
         setUser('null')
         navigate('/landing')
+        localStorage.removeItem('token')
       }
       else{
         toast.error(data.message)

@@ -49,6 +49,7 @@ const AddAddress = () => {
         }, 1000);
       } else {
         console.log(data.message)
+        console.log(data.message)
         toast.error(data.message);
       }
     } catch (error) {
