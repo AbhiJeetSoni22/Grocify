@@ -4,8 +4,8 @@ import { useAppContext } from '../context/AppContext';
 import toast from 'react-hot-toast';
 
 const Signup = () => {
-  const { setUser,axios } = useAppContext()
-  const [formData, setFormData, navigate] = useState({
+  const { setUser,axios, navigate } = useAppContext()
+  const [formData, setFormData]= useState({
     name: '',
     email: '',
     password: '',

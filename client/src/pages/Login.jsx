@@ -4,7 +4,7 @@ import { useAppContext } from '../context/AppContext';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-  const { setUser,navigate, axios } = useAppContext();
+  const { setUser, navigate, axios } = useAppContext();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -20,7 +20,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     try {
         e.preventDefault();
-        // Handle signup logic here
         const { data }= await axios.post('/api/user/login',{
           email: formData.email,
           password: formData.password,
@@ -39,7 +38,15 @@ const Login = () => {
         toast.error("Invalid credentials");
         console.error('Login error:', error);
     }
-    };
+  };
+
+  const fillDemoCredentials = () => {
+    setFormData({
+      email: 'demo@gmail.com',
+      password: '12345'
+    });
+    toast.success('Demo credentials filled!');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center p-4">
@@ -50,13 +57,12 @@ const Login = () => {
         <div className="p-8">
           <div className="flex justify-center mb-8">
             <div className="flex items-center space-x-2">
-             
               <div className="flex-shrink-0 flex items-center">
-            <div className="flex items-center" >
-              <img src="/favicon.svg" alt="Favicon" className="w-8 h-8" />
-              <h1 className=" text-2xl font-bold text-gray-700">rocify</h1>
-            </div>
-          </div>
+                <div className="flex items-center" >
+                  <img src="/favicon.svg" alt="Favicon" className="w-8 h-8" />
+                  <h1 className=" text-2xl font-bold text-gray-700">rocify</h1>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -81,7 +87,6 @@ const Login = () => {
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                
               </div>
               <input
                 type="password"
@@ -103,7 +108,17 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
+            <button
+              onClick={fillDemoCredentials}
+              className="w-full bg-amber-500 text-white py-3 rounded-lg shadow-md hover:bg-amber-600 transition duration-300 font-medium transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-opacity-50"
+
+            >
+              Demo Credentials
+            </button>
+          </div>
+
+          <div className="mt-4 text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
               <Link to="/signup" className="text-primary font-medium hover:text-primary-dull transition duration-300">
@@ -111,8 +126,6 @@ const Login = () => {
               </Link>
             </p>
           </div>
-
-       
         </div>
       </div>
     </div>
