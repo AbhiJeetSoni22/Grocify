@@ -37,6 +37,7 @@ const Cart = () => {
   useEffect(() => {
     if (products.length > 0 && cartItems) {
       getCart();
+      scrollTo(0,0);
     }
   }, [products, cartItems]);
 

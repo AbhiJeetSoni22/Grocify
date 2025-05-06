@@ -21,6 +21,7 @@ const MyOrders = () => {
   useEffect(()=>{
     if(user){
         fetchMyOrders()
+        scrollTo(0,0);
     }
     
   },[user])
