@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { assets } from '../assets/assets';
 import toast from 'react-hot-toast';
 import { useAppContext } from '../context/AppContext';
@@ -16,7 +16,7 @@ const InputField = ({ type, placeholder, name, handleChange, address }) => (
 );
 
 const AddAddress = () => {
-  const {user,navigate,axios} = useAppContext();
+  const {navigate,axios} = useAppContext();
   const [address, setAddress] = useState({
     firstName: '',
     lastName: '',
@@ -48,6 +48,7 @@ const AddAddress = () => {
           navigate('/dashboard/cart');
         }, 1000);
       } else {
+        console.log(data.message)
         toast.error(data.message);
       }
     } catch (error) {
@@ -56,11 +57,7 @@ const AddAddress = () => {
     }
   };
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, []);
+
   return (
     <div className="pb-16 mt-16 px-4 md:px-8">
       <p className="text-2xl md:text-3xl text-gray-500 text-center md:text-left">

@@ -10,7 +10,7 @@ export const addAddress = async (req, res) => {
     ...address,
     userId
     });
-    return res.status(200).json({ success: true, message: 'Address added successfully' });
+    return res.status(200).json({ success: true, message: 'Address added successfully' ,userId });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
