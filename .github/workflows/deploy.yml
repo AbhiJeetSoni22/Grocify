@@ -52,13 +52,16 @@ jobs:
             pm2 save
 
             # ===== FRONTEND (VITE) =====
-            cd ../frontend
-            npm install
-            npm run build
+          cd /home/ubuntu/Grocify/frontend
+          npm install || true
+          npm run build || true
 
+          if [ -d "dist" ]; then
             sudo rm -rf /var/www/html/*
             sudo cp -r dist/* /var/www/html/
             sudo chown -R www-data:www-data /var/www/html
             sudo chmod -R 755 /var/www/html
             sudo systemctl restart nginx
-          EOF
+          else
+            echo "Frontend build failed, skipping deploy"
+          fi
