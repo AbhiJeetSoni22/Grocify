@@ -26,13 +26,16 @@ jobs:
             set -e
             cd /home/ubuntu
 
-            # Clone repo if not exists
-            if [ ! -d "Grocify" ]; then
+            # Reset local changes (IMPORTANT)
+            if [ -d "Grocify" ]; then
+              cd Grocify
+              git reset --hard
+              git clean -fd
+              git pull origin main
+            else
               git clone https://github.com/AbhiJeetSoni22/Grocify.git
+              cd Grocify
             fi
-
-            cd Grocify
-            git pull origin main
 
             # ===== BACKEND =====
             cd backend
@@ -52,16 +55,17 @@ jobs:
             pm2 save
 
             # ===== FRONTEND (VITE) =====
-          cd /home/ubuntu/Grocify/frontend
-          npm install || true
-          npm run build || true
+            cd ../frontend
+            npm install
+            npm run build
 
-          if [ -d "dist" ]; then
-            sudo rm -rf /var/www/html/*
-            sudo cp -r dist/* /var/www/html/
-            sudo chown -R www-data:www-data /var/www/html
-            sudo chmod -R 755 /var/www/html
-            sudo systemctl restart nginx
-          else
-            echo "Frontend build failed, skipping deploy"
-          fi
+            if [ -d "dist" ]; then
+              sudo rm -rf /var/www/html/*
+              sudo cp -r dist/* /var/www/html/
+              sudo chown -R www-data:www-data /var/www/html
+              sudo chmod -R 755 /var/www/html
+              sudo systemctl restart nginx
+            else
+              echo "Frontend build failed, skipping deploy"
+            fi
+          EOF
