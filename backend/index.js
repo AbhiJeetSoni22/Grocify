@@ -31,16 +31,10 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed"));
-    }
-  },
+  origin: true,       // 🔥 allow same-origin automatically
   credentials: true,
 }));
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
