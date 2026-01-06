@@ -87,7 +87,7 @@ export const loginUser = async (req, res) => {
 // checkAuth: /api/user/is-auth
 export const isAuth = async (req, res) => {
     try {
-        const { userId } = req.body;
+        const userId  = req.user.id;
         const user = await User.findById(userId).select("-password");
         if (!user) {
             return res.status(200).json({ success: false, message: "User not found" }); // Return success: false

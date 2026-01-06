@@ -5,7 +5,8 @@ import Product from "../models/product.model.js";
 
 export const placeOrderCOD = async (req, res) => {
     try {
-        const { userId, items, address } = req.body;
+        const {  items, address } = req.body;
+        const userId = req.user.id
         if (!address || items.length === 0 || !userId) {
             return res.status(400).json({ success: false, message: 'Missing required fields' });
         }
@@ -46,7 +47,7 @@ export const placeOrderCOD = async (req, res) => {
 //get order by userId : /api/order/user
 export const getUserOrder = async (req, res) => {
     try {
-        const { userId } = req.body;
+        const userId  = req.user.id;
         if(!userId) {
             return res.status(400).json({ success: false, message: 'Missing required fields' });
         }
