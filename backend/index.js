@@ -26,7 +26,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
   "https://grocify-uyuf.onrender.com",
-  "http://3.109.228.147"
+  "http://3.109.228.147",
+  "https://d2pre52kmkfxgn.cloudfront.net/"
 ];
 
 app.use(cors({
