@@ -5,7 +5,7 @@ const authUser = async (req, res, next) => {
     
 
     if (!token) {
-        return res.status(200).json({ success: false, message: "Unauthorized" });
+        return res.status(200).json({ success: false, message: "Unauthorized because of no token" });
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
