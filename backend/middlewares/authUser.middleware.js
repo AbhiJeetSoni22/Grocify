@@ -16,7 +16,7 @@ const authUser = async (req, res, next) => {
             req.body.userId = decoded.id;
          
         } else {
-            return res.status(200).json({ success: false, message: "Unauthorized" });
+            return res.status(200).json({ success: false, message: "Unauthorized because of id does not match" });
         }
         next();
     } catch (error) {
