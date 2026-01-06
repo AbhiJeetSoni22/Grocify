@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 await connectDB();
 // Connect to Cloudinary
 await connectCloudinary();
-
+app.use(express.json()); 
 // Define allowed origins for CORS
 const allowedOrigins = ['http://localhost:5173','http://localhost:4173','https://grocify-uyuf.onrender.com'];
 app.use(cors({
@@ -26,7 +26,7 @@ app.use(cors({
   credentials: true,
 }));
 // Middleware configuration
-app.use(express.json()); // Add this to parse JSON request bodies
+// Add this to parse JSON request bodies
 app.use(cookieParser());
 app.use(cors({
     origin: allowedOrigins,
