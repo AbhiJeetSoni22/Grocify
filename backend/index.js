@@ -20,7 +20,7 @@ await connectDB();
 await connectCloudinary();
 
 // Define allowed origins for CORS
-const allowedOrigins = ['http://localhost:5173','http://localhost:4173','https://grocify-uyuf.onrender.com'];
+const allowedOrigins = ['http://localhost:5173','http://localhost:4173','https://grocify-uyuf.onrender.com','http://http://3.109.228.147/'];
 
 // Middleware configuration
 app.use(express.json()); // Add this to parse JSON request bodies
