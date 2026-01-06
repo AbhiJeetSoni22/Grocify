@@ -31,8 +31,8 @@ export const registerUser = async (req, res) => {
         // Set cookie with JWT token
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+            secure: false,
+            sameSite: "lax",
             maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
         });
         return res.status(201).json({ success:true, user: { id: user._id, name: user.name, email: user.email } });
