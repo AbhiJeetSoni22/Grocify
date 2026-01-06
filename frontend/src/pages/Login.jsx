@@ -26,12 +26,7 @@ const Login = () => {
       const { data } = await axios.post('/api/user/login', {
         email: formData.email,
         password: formData.password,
-      },
-      {
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },}
+      }
     );
      
       if(data.success) {
