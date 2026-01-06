@@ -33,6 +33,7 @@ export const registerUser = async (req, res) => {
             httpOnly: true,
             secure: false,
             sameSite: "lax",
+            path: "/",
             maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
         });
         return res.status(201).json({ success:true, user: { id: user._id, name: user.name, email: user.email } });
