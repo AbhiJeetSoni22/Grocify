@@ -18,19 +18,27 @@ const PORT = process.env.PORT || 5000;
 await connectDB();
 // Connect to Cloudinary
 await connectCloudinary();
-app.use(express.json()); 
-// Define allowed origins for CORS
-const allowedOrigins = ['http://localhost:5173','http://localhost:4173','https://grocify-uyuf.onrender.com'];
-app.use(cors({
-  origin: "http://3.109.228.147",
-  credentials: true,
-}));
-// Middleware configuration
-// Add this to parse JSON request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:4173",
+  "https://grocify-uyuf.onrender.com",
+  "http://3.109.228.147"
+];
+
 app.use(cors({
-    origin: allowedOrigins,
-    credentials: true,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
 }));
 
 app.get('/', (req, res) => {
@@ -45,5 +53,5 @@ app.use('/api/address', addressRouter);
 app.use('/api/order',orderRouter);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on ${PORT}`);
 });
