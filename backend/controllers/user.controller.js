@@ -68,12 +68,13 @@ export const loginUser = async (req, res) => {
         });
         
         // Set cookie with JWT token
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-            maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
-        });
+       res.cookie("token", token, {
+  httpOnly: true,
+  secure: false,     // 🔥 MUST be false on HTTP
+  sameSite: "lax",   // 🔥 MUST be lax on HTTP
+  path: "/",
+  maxAge: 3 * 24 * 60 * 60 * 1000,
+});
         return res.status(200).json({ success:true,token, user: { id: user._id, name: user.name, email: user.email } ,message:"Logged In Successfully" });
 
     } catch (error) {
