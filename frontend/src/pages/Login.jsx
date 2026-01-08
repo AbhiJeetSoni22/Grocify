@@ -23,7 +23,7 @@ const Login = () => {
       e.preventDefault();
       setIsLoading(true); // Set loading to true when submitting
       
-      const { data } = await axios.post('/user/login', {
+      const { data } = await axios.post('/api/user/login', {
         email: formData.email,
         password: formData.password,
       }
