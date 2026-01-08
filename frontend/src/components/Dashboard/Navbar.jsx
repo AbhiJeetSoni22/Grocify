@@ -64,10 +64,10 @@ const Navbar = () => {
               </NavLink>
 
               <NavLink
-                to="/dashboard/contact"
+                to="/dashboard/my-orders"
                 className="block px-3 py-2 rounded-md text-lg font-medium text-gray-600 hover:text-primary hover:bg-green-50 transition duration-300"
               >
-                Contact
+                My Orders
               </NavLink>
           
 

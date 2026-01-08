@@ -10,15 +10,15 @@ const MainBanner = () => {
 
       <div className='absolute inset-0 flex flex-col items-center md:items-start justify-end md:justify-center pb-24 md:pb-0 px-4 md:pl-18 lg:pl-24'>
         <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-center md:text-left max-w-72 md:max-w-80 lg:max-w-105 leading-tight lg:leading-15'>
-            Freshness You Can Trust, Savings You Will Love!
+            Freshness You Can Trust, Savings You Will Love !
         </h1>
       <div className='flex items-center mt-6 font-medium'>
-        <Link to={'/dashboard/products'} className='group flex items-center gap-2 px-7 md:px-9 py-3 bg-primary hover:bg-primary-dull text-white rounded  font-semibold text-sm md:text-base transition duration-200 ease-in-out' >
+        <Link to='/dashboard/products' className='group flex items-center gap-2 px-7 md:px-9 py-3 bg-primary hover:bg-primary-dull text-white rounded  font-semibold text-sm md:text-base transition duration-200 ease-in-out' >
         Shop now
         <img src={assets.white_arrow_icon} alt="arrow"  className='md:hidden transition group-focus:translate-x-1'/>
         </Link>
 
-        <Link to={'/dashboard/products'} className='group hidden md:flex items-center group-hover:bg-gray-600 gap-2 px-9 py-3 cursor-pointer' >
+        <Link to='/dashboard/products' className='group hidden md:flex items-center group-hover:bg-gray-600 gap-2 px-9 py-3 cursor-pointer' >
         Explore Deals
         <img src={assets.black_arrow_icon} alt="black_arrow"  className=' transition group-hover:translate-x-1 '/>
         </Link>
