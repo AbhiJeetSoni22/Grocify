@@ -13,12 +13,12 @@ const MainBanner = () => {
             Freshness You Can Trust, Savings You Will Love!
         </h1>
       <div className='flex items-center mt-6 font-medium'>
-        <Link to={'/products'} className='group flex items-center gap-2 px-7 md:px-9 py-3 bg-primary hover:bg-primary-dull text-white rounded  font-semibold text-sm md:text-base transition duration-200 ease-in-out' >
+        <Link to={'/dashboard/products'} className='group flex items-center gap-2 px-7 md:px-9 py-3 bg-primary hover:bg-primary-dull text-white rounded  font-semibold text-sm md:text-base transition duration-200 ease-in-out' >
         Shop now
         <img src={assets.white_arrow_icon} alt="arrow"  className='md:hidden transition group-focus:translate-x-1'/>
         </Link>
 
-        <Link to={'/products'} className='group hidden md:flex items-center group-hover:bg-gray-600 gap-2 px-9 py-3 cursor-pointer' >
+        <Link to={'/dashboard/products'} className='group hidden md:flex items-center group-hover:bg-gray-600 gap-2 px-9 py-3 cursor-pointer' >
         Explore Deals
         <img src={assets.black_arrow_icon} alt="black_arrow"  className=' transition group-hover:translate-x-1 '/>
         </Link>
