@@ -19,7 +19,7 @@ const MainBanner = () => {
         </Link>
 
         <Link to='/dashboard/my-orders' className='group hidden md:flex items-center group-hover:bg-gray-600 gap-2 px-9 py-3 cursor-pointer' >
-        Explore Deals
+        Check Your Orders
         <img src={assets.black_arrow_icon} alt="black_arrow"  className=' transition group-hover:translate-x-1 '/>
         </Link>
       </div>
