@@ -33,7 +33,7 @@ jobs:
             npm ci
             npm run build
             sudo rm -rf /var/www/html/*
-            sudo cp -r build/* /var/www/html/
+            sudo cp -r dist/* /var/www/html/
             
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
