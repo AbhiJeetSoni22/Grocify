@@ -18,9 +18,7 @@ const UserDashboard = () => {
   useEffect(() => {
     // Check for token in localStorage or cookies
     const token = localStorage.getItem('token') || Cookies.get('token');
-    console.log('cookies',token)
     
-    console.log(token)
     if (!token) {
       navigate('/landing'); // Redirect to the landing page if no token is found
     }
